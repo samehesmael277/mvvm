@@ -16,24 +16,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        movieViewModel.movieNameMutableLiveData.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                binding.textView.setText(s);
-            }
-        });
+        movieViewModel=new MovieViewModel();
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                movieViewModel.getMovieName();
-            }
-        });
+        binding.button.setOnClickListener(view -> movieViewModel.getMovieName());
+
+        movieViewModel.movieNameMutableLiveData.observe(this, s -> binding.textView.setText(s));
 
     }
 
